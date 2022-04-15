@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace srms_orchestration_service
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
