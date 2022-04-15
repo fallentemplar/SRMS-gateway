@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using srms_orchestration_service.Client;
 using srms_orchestration_service.Client.ContactsService;
+using srms_orchestration_service.Config;
 using srms_orchestration_service.Services.Impl;
 
 namespace srms_orchestration_service
@@ -28,9 +25,15 @@ namespace srms_orchestration_service
         {
 
             services.AddControllers();
-
-            services.Configure<ContactsServiceClientConfig>(Configuration.GetSection("Services:SRMS.Contacts.Service"));
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Social Relationships Management System Orchestration service", Version = "v1" });
+            });
+            ConfigureClientsParameters(services);
+            services.AddTransient<RestClient>();
+            services.AddTransient<ContactsServiceClient>();
             services.AddSingleton<ContactsServiceImpl>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +42,8 @@ namespace srms_orchestration_service
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "srms_events_service v1"));
             }
 
             app.UseRouting();
@@ -49,6 +54,11 @@ namespace srms_orchestration_service
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void ConfigureClientsParameters(IServiceCollection services)
+        {
+            services.Configure<ContactsServiceClientConfig>(Configuration.GetSection("Services:SRMS.Contacts.Service"));
         }
     }
 }
