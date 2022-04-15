@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace srms_orchestration_service.Services.Impl
 {
-    public class ContactsServiceImpl
+    public class ContactsServiceImpl : IContactsService
     {
         private readonly ContactsServiceClient _contactsServiceClient;
 
@@ -13,14 +13,24 @@ namespace srms_orchestration_service.Services.Impl
             _contactsServiceClient = contactsServiceClient;
         }
 
-        public async Task CreateContact()
+        public async Task<ContactDto> GetContact(string contactId)
         {
-            ContactDto contactDto = new ContactDto();
-            contactDto.BirthDate = new System.DateTime(1997, 01, 15);
-            contactDto.FirstName = "Rodrigo";
-            contactDto.LastName = "Aguirre";
-            contactDto.UserId = "961e7e8d-0022-40f7-9844-074acbb18a81";
-            await _contactsServiceClient.CreateContact(contactDto);
+            return await _contactsServiceClient.GetContact(contactId);
+        }
+
+        public async Task<ContactDto> CreateContact(ContactDto newContact)
+        {
+            return await _contactsServiceClient.CreateContact(newContact);
+        }
+
+        public async Task<ContactDto> UpdateContact(ContactDto contactDto)
+        {
+            return await _contactsServiceClient.CreateContact(contactDto);
+        }
+
+        public async Task<bool> DeleteContact(string contactId)
+        {
+            return await _contactsServiceClient.DeleteContact(contactId);
         }
     }
 }

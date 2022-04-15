@@ -25,19 +25,49 @@ namespace srms_orchestration_service.Config
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task Get(string url)
+        public async Task<T> Get<T>(string url)
         {
-            await _client.GetAsync(url);
+            HttpResponseMessage httpResponseMessage = await _client.GetAsync(url);
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                string response = httpResponseMessage.Content.ReadAsStringAsync().Result;
+                T parsedResponse = JsonConvert.DeserializeObject<T>(response);
+                return parsedResponse;
+            }
+            throw new Exception("Cannot retrieve contact");
         }
 
-        public async Task Post(string url, Object body)
+        public async Task<T> Post<T>(string url, Object body)
         {
             string jsonContent = JsonConvert.SerializeObject(body);
             HttpResponseMessage httpResponseMessage = await _client.PostAsync(url, new StringContent(jsonContent, Encoding.UTF8, "application/json"));
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 string response = httpResponseMessage.Content.ReadAsStringAsync().Result;
+                T parsedResponse = JsonConvert.DeserializeObject<T>(response);
+                return parsedResponse;
             }
+            throw new Exception("Cannot create contact");
+        }
+
+        public async Task<T> Put<T>(string url, Object body)
+        {
+            string jsonContent = JsonConvert.SerializeObject(body);
+            HttpResponseMessage httpResponseMessage = await _client.PutAsync(url, new StringContent(jsonContent, Encoding.UTF8, "application/json"));
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                string response = httpResponseMessage.Content.ReadAsStringAsync().Result;
+                T parsedResponse = JsonConvert.DeserializeObject<T>(response);
+                return parsedResponse;
+            }
+            throw new Exception("Cannot update contact");
+        }
+
+        public async Task<bool> Delete(string url)
+        {
+            HttpResponseMessage httpResponseMessage = await _client.DeleteAsync(url);
+
+            return httpResponseMessage.IsSuccessStatusCode;
         }
     }
 }

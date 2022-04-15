@@ -19,16 +19,30 @@ namespace srms_orchestration_service.Client
 
         }
 
-        public async Task CreateContact(ContactDto contactDto)
+        public async Task<ContactDto> CreateContact(ContactDto contactDto)
         {
             string url = CreateUrl(ContactUrl);
-            await _restClient.Post(url, contactDto);
+            ContactDto createdContact = await _restClient.Post<ContactDto>(url, contactDto);
+            return createdContact;
         }
 
-        public async Task GetContact(string contactId)
+        public async Task<ContactDto> GetContact(string contactId)
         {
             string url = CreateUrl(ContactUrl, contactId);
-            await _restClient.Get(url);
+            return await _restClient.Get<ContactDto>(url);
+        }
+
+        public async Task<ContactDto> UpdateContact(string contactId, ContactDto contactDto)
+        {
+            string url = CreateUrl(ContactUrl, contactId);
+            ContactDto createdContact = await _restClient.Put<ContactDto>(url, contactDto);
+            return createdContact;
+        }
+
+        public async Task<bool> DeleteContact(string contactId)
+        {
+            string url = CreateUrl(ContactUrl, contactId);
+            return await _restClient.Delete(url);
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using srms_orchestration_service.Client;
 using srms_orchestration_service.Client.ContactsService;
 using srms_orchestration_service.Config;
+using srms_orchestration_service.Services;
 using srms_orchestration_service.Services.Impl;
 
 namespace srms_orchestration_service
@@ -32,7 +33,7 @@ namespace srms_orchestration_service
             ConfigureClientsParameters(services);
             services.AddTransient<RestClient>();
             services.AddTransient<ContactsServiceClient>();
-            services.AddSingleton<ContactsServiceImpl>();
+            services.AddSingleton<IContactsService, ContactsServiceImpl>();
 
         }
 
