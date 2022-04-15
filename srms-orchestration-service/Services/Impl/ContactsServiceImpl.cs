@@ -1,4 +1,5 @@
 ﻿using srms_orchestration_service.Client;
+using srms_orchestration_service.Client.EventsService;
 using srms_orchestration_service.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,12 +9,14 @@ namespace srms_orchestration_service.Services.Impl
     public class ContactsServiceImpl : IContactsService
     {
         private readonly ContactsServiceClient _contactsServiceClient;
+        private readonly EventsServiceClient _eventsServiceClient;
 
-        public ContactsServiceImpl(ContactsServiceClient contactsServiceClient)
+        public ContactsServiceImpl(ContactsServiceClient contactsServiceClient, EventsServiceClient eventsServiceClient)
         {
             _contactsServiceClient = contactsServiceClient;
+            _eventsServiceClient = eventsServiceClient;
         }
-        
+
         public async Task<List<ContactDto>> GetUserContacts(string userId)
         {
             return await _contactsServiceClient.GetUserContacts(userId);
@@ -26,7 +29,9 @@ namespace srms_orchestration_service.Services.Impl
 
         public async Task<ContactDto> CreateContact(ContactDto newContact)
         {
-            return await _contactsServiceClient.CreateContact(newContact);
+            ContactDto createdContact = await _contactsServiceClient.CreateContact(newContact);
+            await _eventsServiceClient.CreateContactFactsRecord(createdContact.UserId, createdContact.ContactId);
+            return createdContact;
         }
 
         public async Task<ContactDto> UpdateContact(string userId, ContactDto contactDto)

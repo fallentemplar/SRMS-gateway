@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
-using srms_orchestration_service.Constants;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -58,6 +55,17 @@ namespace srms_orchestration_service.Config
                 return parsedResponse;
             }
             throw new Exception("Cannot create contact");
+        }
+
+        public async Task Post(string url, Object body)
+        {
+            string jsonContent = JsonConvert.SerializeObject(body);
+            HttpResponseMessage httpResponseMessage = await _client.PostAsync(url, new StringContent(jsonContent, Encoding.UTF8, "application/json"));
+            if (!httpResponseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception("Cannot create contact");
+            }
+
         }
 
         public async Task<T> Put<T>(string url, Object body)

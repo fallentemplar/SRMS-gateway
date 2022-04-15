@@ -1,5 +1,4 @@
-﻿using System;
-namespace srms_orchestration_service.Client.ContactsService
+﻿namespace srms_orchestration_service.Client.ContactsService
 {
     public class ContactsServiceClientConfig : IServiceClientConfig
     {
