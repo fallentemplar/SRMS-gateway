@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using srms_orchestration_service.Client;
 using srms_orchestration_service.Client.ContactsService;
+using srms_orchestration_service.Client.EventsService;
 using srms_orchestration_service.Config;
 using srms_orchestration_service.Services;
 using srms_orchestration_service.Services.Impl;
@@ -35,8 +36,9 @@ namespace srms_orchestration_service
             ConfigureClientsParameters(services);
             services.AddTransient<RestClient>();
             services.AddTransient<ContactsServiceClient>();
+            services.AddTransient<EventsServiceClient>();
             services.AddSingleton<IContactsService, ContactsServiceImpl>();
-
+            services.AddSingleton<IFactsService, FactsServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +64,7 @@ namespace srms_orchestration_service
         private void ConfigureClientsParameters(IServiceCollection services)
         {
             services.Configure<ContactsServiceClientConfig>(Configuration.GetSection("Services:SRMS.Contacts.Service"));
+            services.Configure<EventsServiceClientConfig>(Configuration.GetSection("Services:SRMS.Events.Service"));
         }
     }
 }

@@ -14,7 +14,7 @@ namespace srms_orchestration_service.Client
         protected readonly string Token;
 
         protected readonly RestClient _restClient;
-        protected BaseClient(RestClient restClient, IOptions<ContactsServiceClientConfig> clientConfig)
+        protected BaseClient(RestClient restClient, IOptions<IServiceClientConfig> clientConfig)
         {
             _restClient = restClient;
             BaseUrl = clientConfig.Value.Url;
