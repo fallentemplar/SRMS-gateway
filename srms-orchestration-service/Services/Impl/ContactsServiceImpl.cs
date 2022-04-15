@@ -1,5 +1,6 @@
 ﻿using srms_orchestration_service.Client;
 using srms_orchestration_service.Dto;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace srms_orchestration_service.Services.Impl
@@ -12,6 +13,11 @@ namespace srms_orchestration_service.Services.Impl
         {
             _contactsServiceClient = contactsServiceClient;
         }
+        
+        public async Task<List<ContactDto>> GetUserContacts(string userId)
+        {
+            return await _contactsServiceClient.GetUserContacts(userId);
+        }
 
         public async Task<ContactDto> GetContact(string contactId)
         {
@@ -23,9 +29,9 @@ namespace srms_orchestration_service.Services.Impl
             return await _contactsServiceClient.CreateContact(newContact);
         }
 
-        public async Task<ContactDto> UpdateContact(ContactDto contactDto)
+        public async Task<ContactDto> UpdateContact(string userId, ContactDto contactDto)
         {
-            return await _contactsServiceClient.CreateContact(contactDto);
+            return await _contactsServiceClient.UpdateContact(userId, contactDto);
         }
 
         public async Task<bool> DeleteContact(string contactId)

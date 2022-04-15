@@ -29,7 +29,9 @@ namespace srms_orchestration_service
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Social Relationships Management System Orchestration service", Version = "v1" });
+                c.OperationFilter<SwaggerHeaderConfig>();
             });
+
             ConfigureClientsParameters(services);
             services.AddTransient<RestClient>();
             services.AddTransient<ContactsServiceClient>();
