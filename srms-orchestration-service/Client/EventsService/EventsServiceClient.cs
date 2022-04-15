@@ -2,6 +2,7 @@
 using srms_orchestration_service.Config;
 using srms_orchestration_service.Constants;
 using srms_orchestration_service.Dto.EventsService;
+using System;
 using System.Threading.Tasks;
 
 namespace srms_orchestration_service.Client.EventsService
@@ -36,6 +37,26 @@ namespace srms_orchestration_service.Client.EventsService
         {
             _restClient.AddRequestHeader(HeaderNames.USER_ID, userId);
             return await _restClient.Get<ContactFactsDto>(CreateUrl(FactsUrl, contactId));
+        }
+
+        public async Task CreateFactForContact(string userId, string contactId, FactDto newFact)
+        {
+            _restClient.AddRequestHeader(HeaderNames.USER_ID, userId);
+            await _restClient.Post(CreateUrl(FactsUrl, contactId), newFact);
+        }
+
+        public async Task UpdateContactFact(string userId, string contactId, string factId, FactDto newFact)
+        {
+            _restClient.AddRequestHeader(HeaderNames.USER_ID, userId);
+            string url = CreateUrl(FactsUrl, contactId, factId);
+            await _restClient.Put(url, newFact);
+        }
+
+        public async Task DeleteContactFact(string userId, string contactId, string factId)
+        {
+            _restClient.AddRequestHeader(HeaderNames.USER_ID, userId);
+            string url = CreateUrl(FactsUrl, contactId, factId);
+            await _restClient.Delete(url);
         }
 
     }

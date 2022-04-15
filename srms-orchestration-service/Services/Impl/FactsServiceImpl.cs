@@ -17,5 +17,20 @@ namespace srms_orchestration_service.Services.Impl
         {
             return await _eventsServiceClient.GetContactFacts(userId, contactId);
         }
+
+        public async Task CreateFactForContact(string userId, string contactId, FactDto newFact)
+        {
+            await _eventsServiceClient.CreateFactForContact(userId, contactId, newFact);
+        }
+
+        public async Task UpdateContactFact(string userId, string contactId, string factId, FactDto newFact)
+        {
+            await _eventsServiceClient.UpdateContactFact(userId, contactId, factId, newFact);
+        }
+
+        public async Task DeleteContactFact(string userId, string contactId, string factId)
+        {
+            await _eventsServiceClient.DeleteContactFact(userId, contactId, factId);
+        }
     }
 }

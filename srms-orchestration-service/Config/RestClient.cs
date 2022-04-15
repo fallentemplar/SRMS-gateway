@@ -81,6 +81,16 @@ namespace srms_orchestration_service.Config
             throw new Exception("Cannot update contact");
         }
 
+        public async Task Put(string url, Object body)
+        {
+            string jsonContent = JsonConvert.SerializeObject(body);
+            HttpResponseMessage httpResponseMessage = await _client.PutAsync(url, new StringContent(jsonContent, Encoding.UTF8, "application/json"));
+            if (!httpResponseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception("Cannot update contact");
+            }
+        }
+
         public async Task<bool> Delete(string url)
         {
             HttpResponseMessage httpResponseMessage = await _client.DeleteAsync(url);

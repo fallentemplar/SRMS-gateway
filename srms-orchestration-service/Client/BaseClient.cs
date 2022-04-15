@@ -1,10 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
-using srms_orchestration_service.Client.ContactsService;
 using srms_orchestration_service.Config;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace srms_orchestration_service.Client
 {
@@ -26,9 +22,14 @@ namespace srms_orchestration_service.Client
             return String.Format("{0}{1}", BaseUrl, endpoint);
         }
 
-        protected string CreateUrl(string endpoint,string parameter)
+        protected string CreateUrl(string endpoint, string parameter)
         {
-            return String.Format("{0}{1}/{2}", BaseUrl, endpoint,parameter);
+            return String.Format("{0}{1}/{2}", BaseUrl, endpoint, parameter);
+        }
+
+        protected string CreateUrl(string endpoint, string firstParameter, string secondParameter)
+        {
+            return String.Format("{0}{1}/{2}/{3}", BaseUrl, endpoint, firstParameter, secondParameter);
         }
     }
 }
