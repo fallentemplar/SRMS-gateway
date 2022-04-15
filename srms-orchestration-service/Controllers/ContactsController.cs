@@ -1,16 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using srms_orchestration_service.Dto;
 using srms_orchestration_service.Services;
-using srms_orchestration_service.Services.Impl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace srms_orchestration_service.Controllers
 {
-    [Route("api/contacts")]
+    [Route("api/contacts/mycontacts")]
     [ApiController]
     public class ContactsController : ControllerBase
     {
@@ -46,7 +41,7 @@ namespace srms_orchestration_service.Controllers
             return await _contactsService.CreateContact(contactDto);
         }
 
-        [HttpPut("{contactId}")]
+        [HttpDelete("{contactId}")]
         public async Task<IActionResult> DeleteContact(string contactId)
         {
             bool deleted = await _contactsService.DeleteContact(contactId);

@@ -44,7 +44,7 @@ namespace srms_orchestration_service
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "srms_events_service v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SRMS Orchestration Service v1"));
             }
 
             app.UseRouting();
