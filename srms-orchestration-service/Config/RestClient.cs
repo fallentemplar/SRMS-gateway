@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using srms_orchestration_service.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,15 @@ namespace srms_orchestration_service.Config
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+        public void AddRequestHeader(string name, string value)
+        {
+            if (_client.DefaultRequestHeaders.Contains(name))
+            {
+                _client.DefaultRequestHeaders.Remove(name);
+            }
+            _client.DefaultRequestHeaders.Add(name, value);
+
         }
 
         public async Task<T> Get<T>(string url)

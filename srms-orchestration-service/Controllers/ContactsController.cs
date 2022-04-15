@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
+using srms_orchestration_service.Constants;
 using srms_orchestration_service.Dto;
 using srms_orchestration_service.Services;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace srms_orchestration_service.Controllers
 {
-    [Route("api/contacts/mycontacts")]
+    [Route("api/contacts")]
     [ApiController]
     public class ContactsController : ControllerBase
     {
@@ -14,6 +18,13 @@ namespace srms_orchestration_service.Controllers
         public ContactsController(IContactsService contactsService)
         {
             _contactsService = contactsService;
+        }
+
+        [HttpGet]
+        public async Task<List<ContactDto>> GetUserContacts()
+        {
+            string userId = GetHeaderFromRequest(HeaderNames.USER_ID);
+            return await _contactsService.GetUserContacts(userId);
         }
 
         [HttpGet("{contactId}")]
@@ -25,13 +36,7 @@ namespace srms_orchestration_service.Controllers
         [HttpPost]
         public async Task<ContactDto> CreateContact(ContactDto newContact)
         {
-            ContactDto contactDto = new ContactDto
-            {
-                BirthDate = new System.DateTime(1997, 01, 15),
-                FirstName = "Rodrigo",
-                LastName = "Aguirre",
-                UserId = "961e7e8d-0022-40f7-9844-074acbb18a81"
-            };
+            newContact.ContactId = null;
             return await _contactsService.CreateContact(newContact);
         }
 
@@ -50,8 +55,16 @@ namespace srms_orchestration_service.Controllers
                 return Ok();
             }
             return StatusCode(500, "Unable to delete contact");
+        }
 
-
+        private string GetHeaderFromRequest(string headerName)
+        {
+            bool retrieved = Request.Headers.TryGetValue(headerName, out StringValues retrievedHeader);
+            if (!retrieved)
+            {
+                Console.WriteLine("Error :c");
+            }
+            return retrievedHeader;
         }
     }
 }

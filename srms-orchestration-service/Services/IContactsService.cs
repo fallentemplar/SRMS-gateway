@@ -1,16 +1,19 @@
 ﻿using srms_orchestration_service.Dto;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace srms_orchestration_service.Services
 {
     public interface IContactsService
     {
-        Task<ContactDto> CreateContact(ContactDto newContact);
-        Task<bool> DeleteContact(string contactId);
+        Task<List<ContactDto>> GetUserContacts(string userId);
+
         Task<ContactDto> GetContact(string contactId);
-        Task<ContactDto> UpdateContact(ContactDto contactDto);
+
+        Task<ContactDto> CreateContact(ContactDto newContact);
+
+        Task<bool> DeleteContact(string contactId);
+
+        Task<ContactDto> UpdateContact(string userId, ContactDto contactDto);
     }
 }
