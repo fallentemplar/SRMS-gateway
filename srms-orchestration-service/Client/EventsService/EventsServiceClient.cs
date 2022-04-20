@@ -2,6 +2,7 @@
 using srms_orchestration_service.Config;
 using srms_orchestration_service.Constants;
 using srms_orchestration_service.Dto.EventsService;
+using srms_orchestration_service.Dto.EventsService.Events;
 using System;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace srms_orchestration_service.Client.EventsService
     {
         private static readonly string ContactUrl = "api/contacts";
         private static readonly string FactsUrl = "api/facts";
+        private static readonly string EventsUrl = "api/events";
         public EventsServiceClient(IOptions<EventsServiceClientConfig> clientConfig, RestClient restClient)
             : base(restClient, clientConfig)
         {
@@ -57,6 +59,13 @@ namespace srms_orchestration_service.Client.EventsService
             _restClient.AddRequestHeader(HeaderNames.USER_ID, userId);
             string url = CreateUrl(FactsUrl, contactId, factId);
             await _restClient.Delete(url);
+        }
+
+        public async Task AddEvent(string userId, string contactId, EventDto eventDto)
+        {
+            _restClient.AddRequestHeader(HeaderNames.USER_ID, userId);
+            string url = CreateUrl(EventsUrl, contactId);
+            await _restClient.Post(url, eventDto);
         }
 
     }

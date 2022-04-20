@@ -5,11 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using srms_orchestration_service.Client;
+using srms_orchestration_service.Client.AttachmentsService;
 using srms_orchestration_service.Client.ContactsService;
 using srms_orchestration_service.Client.EventsService;
 using srms_orchestration_service.Config;
 using srms_orchestration_service.Services;
 using srms_orchestration_service.Services.Impl;
+using srms_orchestration_service.Services.Interfaces;
 
 namespace srms_orchestration_service
 {
@@ -37,8 +39,12 @@ namespace srms_orchestration_service
             services.AddTransient<RestClient>();
             services.AddTransient<ContactsServiceClient>();
             services.AddTransient<EventsServiceClient>();
+            services.AddTransient<AttachmentServiceClient>();
             services.AddSingleton<IContactsService, ContactsServiceImpl>();
+            services.AddSingleton<IAttachmentService, AttachmentServiceImpl>();
             services.AddSingleton<IFactsService, FactsServiceImpl>();
+            services.AddSingleton<IEventsService, EventsServiceImpl>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +71,7 @@ namespace srms_orchestration_service
         {
             services.Configure<ContactsServiceClientConfig>(Configuration.GetSection("Services:SRMS.Contacts.Service"));
             services.Configure<EventsServiceClientConfig>(Configuration.GetSection("Services:SRMS.Events.Service"));
+            services.Configure<AttachmentsServiceClientConfig>(Configuration.GetSection("Services:SRMS.Attachments.Service"));
         }
     }
 }

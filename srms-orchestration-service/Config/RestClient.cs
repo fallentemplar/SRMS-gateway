@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -65,6 +66,34 @@ namespace srms_orchestration_service.Config
             {
                 throw new Exception("Cannot create contact");
             }
+
+        }
+
+        public async Task<T> PostMultipart<T>(string url, IFormFile body)
+        {
+            var fileName = ContentDispositionHeaderValue.Parse(body.ContentDisposition).FileName.Trim('"');
+
+            using (var content = new MultipartFormDataContent())
+            {
+                content.Add(new StreamContent(body.OpenReadStream())
+                {
+                    Headers =
+                    {
+                        ContentLength = body.Length,
+                        ContentType = new MediaTypeHeaderValue(body.ContentType)
+                    }
+                }, "File", fileName);
+                HttpResponseMessage httpResponseMessage = await _client.PostAsync(url, content);
+                if (!httpResponseMessage.IsSuccessStatusCode)
+                {
+                    throw new Exception("Cannot create contact");
+                }
+
+                string response = httpResponseMessage.Content.ReadAsStringAsync().Result;
+                T parsedResponse = JsonConvert.DeserializeObject<T>(response);
+                return parsedResponse;
+            }
+
 
         }
 
