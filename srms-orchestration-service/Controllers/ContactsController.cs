@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Primitives;
 using srms_orchestration_service.Constants;
 using srms_orchestration_service.Dto;
+using srms_orchestration_service.Middleware;
 using srms_orchestration_service.Services;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace srms_orchestration_service.Controllers
 {
+    [AuthMiddleware]
     [Route("api/contacts")]
     [ApiController]
     public class ContactsController : ControllerBase
@@ -43,7 +45,8 @@ namespace srms_orchestration_service.Controllers
         [HttpPut("{contactId}")]
         public async Task<ContactDto> UpdateContact(string contactId, ContactDto contactDto)
         {
-            return await _contactsService.CreateContact(contactDto);
+            contactDto.ContactId = contactId;
+            return await _contactsService.UpdateContact(contactId, contactDto);
         }
 
         [HttpDelete("{contactId}")]

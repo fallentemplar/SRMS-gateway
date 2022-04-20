@@ -9,6 +9,7 @@ using srms_orchestration_service.Client.AttachmentsService;
 using srms_orchestration_service.Client.ContactsService;
 using srms_orchestration_service.Client.EventsService;
 using srms_orchestration_service.Config;
+using srms_orchestration_service.Middleware;
 using srms_orchestration_service.Services;
 using srms_orchestration_service.Services.Impl;
 using srms_orchestration_service.Services.Interfaces;
@@ -44,7 +45,8 @@ namespace srms_orchestration_service
             services.AddSingleton<IAttachmentService, AttachmentServiceImpl>();
             services.AddSingleton<IFactsService, FactsServiceImpl>();
             services.AddSingleton<IEventsService, EventsServiceImpl>();
-            
+            services.AddSingleton<JwtServiceImpl>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +61,9 @@ namespace srms_orchestration_service
 
             app.UseRouting();
 
+            app.UseMiddleware<JwtMiddleware>();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

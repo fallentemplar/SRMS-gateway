@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using srms_orchestration_service.Constants;
 using srms_orchestration_service.Dto.EventsService;
+using srms_orchestration_service.Middleware;
 using srms_orchestration_service.Services;
 using System;
 using System.Threading.Tasks;
 
 namespace srms_orchestration_service.Controllers
 {
+    [AuthMiddleware]
     [Route("api/facts")]
     [ApiController]
     public class FactsController : ControllerBase
