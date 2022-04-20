@@ -68,5 +68,12 @@ namespace srms_orchestration_service.Client.EventsService
             await _restClient.Post(url, eventDto);
         }
 
+        public async Task<ContactEventsDto> GetContactEvents(string userId, string contactId)
+        {
+            _restClient.AddRequestHeader(HeaderNames.USER_ID, userId);
+            string url = CreateUrl(EventsUrl, contactId);
+            return await _restClient.Get<ContactEventsDto>(url);
+        }
+
     }
 }

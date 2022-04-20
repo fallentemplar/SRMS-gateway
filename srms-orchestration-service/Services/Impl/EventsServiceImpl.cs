@@ -37,5 +37,10 @@ namespace srms_orchestration_service.Services.Impl
 
             await _eventsServiceClient.AddEvent(userId, contactId, eventDto);
         }
+
+        public async Task<ContactEventsDto> GetContactEvents(string userId, string contactId)
+        {
+            return await _eventsServiceClient.GetContactEvents(userId, contactId);
+        }
     }
 }

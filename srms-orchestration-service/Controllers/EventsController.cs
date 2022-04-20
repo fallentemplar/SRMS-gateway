@@ -35,6 +35,13 @@ namespace srms_orchestration_service.Controllers
             await _eventsService.AddEvent(userId, contactId, newEvent);
         }
 
+        [HttpGet("{contactId}")]
+        public async Task<ContactEventsDto> GetContactEvents(string contactId)
+        {
+            string userId = GetHeaderFromRequest(HeaderNames.USER_ID);
+            return await _eventsService.GetContactEvents(userId, contactId);
+        }
+
         private string GetHeaderFromRequest(string headerName)
         {
             bool retrieved = Request.Headers.TryGetValue(headerName, out StringValues retrievedHeader);

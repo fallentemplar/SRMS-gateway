@@ -7,5 +7,6 @@ namespace srms_orchestration_service.Services
     public interface IEventsService
     {
         Task AddEvent(string userId, string contactId, InboundEventDto newEvent);
+        Task<ContactEventsDto> GetContactEvents(string userId, string contactId);
     }
 }
