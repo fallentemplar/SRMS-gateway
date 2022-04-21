@@ -1,0 +1,226 @@
+{
+	"info": {
+		"_postman_id": "a5048a18-28a7-483b-b7fc-d6d1580f84d6",
+		"name": "Contacts Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"birthDate\": \"1998-11-16T00:00:00.000Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-contacts-service-url}}/api/users",
+							"host": [
+								"{{srms-contacts-service-url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contacts",
+			"item": [
+				{
+					"name": "Create Contact",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"birthDate\": \"1998-11-16T00:00:00.000Z\",\r\n    \"userId\": \"{{user-id}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-contacts-service-url}}/api/contacts",
+							"host": [
+								"{{srms-contacts-service-url}}"
+							],
+							"path": [
+								"api",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"contactId\": \"{{contact-id}}\",\r\n        \"firstName\": \"{{$randomFirstName}}\",\r\n        \"lastName\": \"{{$randomLastName}}\",\r\n        \"birthDate\": \"1995-11-16T00:00:00\",\r\n        \"userId\": \"{{user-id}}\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-contacts-service-url}}/api/contacts/{{contact-id}}",
+							"host": [
+								"{{srms-contacts-service-url}}"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"{{contact-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Contact",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"contactId\": \"08da1a80-b2fe-4d1b-8f20-52f8d7d87fb6\",\r\n        \"firstName\": \"Gideon\",\r\n        \"lastName\": \"Fisher\",\r\n        \"birthDate\": \"1995-11-16T00:00:00\",\r\n        \"userId\": \"08da1a77-07a2-445c-8b90-c5f0a4e8e83a\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-contacts-service-url}}/api/contacts/908c4085-828e-4fa8-aadb-9f85127c1ba3",
+							"host": [
+								"{{srms-contacts-service-url}}"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"908c4085-828e-4fa8-aadb-9f85127c1ba3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Contacts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"birthDate\": \"1998-11-16T00:00:00.000Z\",\r\n    \"userId\": \"{{user-id}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-contacts-service-url}}/api/contacts",
+							"host": [
+								"{{srms-contacts-service-url}}"
+							],
+							"path": [
+								"api",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"birthDate\": \"1998-11-16T00:00:00.000Z\",\r\n    \"userId\": \"{{user-id}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-contacts-service-url}}/api/contacts/{{contact-id}}",
+							"host": [
+								"{{srms-contacts-service-url}}"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"{{contact-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

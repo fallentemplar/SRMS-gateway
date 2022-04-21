@@ -1,0 +1,507 @@
+{
+	"info": {
+		"_postman_id": "1225d9aa-8e8f-425f-b063-1d0b27f7cefc",
+		"name": "Orchestration Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Contacts",
+			"item": [
+				{
+					"name": "Create Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json=pm.response.json();\r",
+									"\r",
+									"const contactId=json.contactId;\r",
+									"\r",
+									"pm.globals.set(\"contact-id\",contactId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"{{$randomFirstName}}\",\r\n  \"lastName\": \"{{$randomLastName}}\",\r\n  \"birthDate\": \"2022-04-15T03:55:39.589Z\",\r\n  \"userId\": \"{{user-id}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-orchestration-service-url}}/api/contacts",
+							"host": [
+								"{{srms-orchestration-service-url}}"
+							],
+							"path": [
+								"api",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Contacts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{srms-orchestration-service-url}}/api/contacts",
+							"host": [
+								"{{srms-orchestration-service-url}}"
+							],
+							"path": [
+								"api",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Individual Contact",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"{{$randomFirstName}}\",\r\n  \"lastName\": \"{{$randomLastName}}\",\r\n  \"birthDate\": \"2022-04-15T03:55:39.589Z\",\r\n  \"userId\": \"{{user-id}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-orchestration-service-url}}/api/contacts/{{contact-id}}",
+							"host": [
+								"{{srms-orchestration-service-url}}"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"{{contact-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Facts",
+			"item": [
+				{
+					"name": "Get Contact Facts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"const facts = Object.keys(json.facts);\r",
+									"if (facts.length > 0) {\r",
+									"    pm.globals.set(\"fact-id\", facts[0]);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{srms-orchestration-service-url}}/api/facts/{{contact-id}}",
+							"host": [
+								"{{srms-orchestration-service-url}}"
+							],
+							"path": [
+								"api",
+								"facts",
+								"{{contact-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Fact for Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fieldName\": \"Color favorito\",\r\n  \"fieldType\": \"Single\",\r\n  \"factCategory\": \"Gustos Personales\",\r\n  \"value\": [\r\n    \"Azul\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-orchestration-service-url}}/api/facts/{{contact-id}}",
+							"host": [
+								"{{srms-orchestration-service-url}}"
+							],
+							"path": [
+								"api",
+								"facts",
+								"{{contact-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact Fact",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fieldName\": \"Favorite Activity\",\r\n  \"fieldType\": \"Single\",\r\n  \"factCategory\": \"Gustos Personales\",\r\n  \"value\": [\r\n    \"{{$randomIngverb}}\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-orchestration-service-url}}/api/facts/{{contact-id}}/{{fact-id}}",
+							"host": [
+								"{{srms-orchestration-service-url}}"
+							],
+							"path": [
+								"api",
+								"facts",
+								"{{contact-id}}",
+								"{{fact-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Contact Fact",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{srms-orchestration-service-url}}/api/facts/{{contact-id}}/{{fact-id}}",
+							"host": [
+								"{{srms-orchestration-service-url}}"
+							],
+							"path": [
+								"api",
+								"facts",
+								"{{contact-id}}",
+								"{{fact-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Add Event for Contact (Attachments)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "EventName",
+									"value": "Día de mi cumpleaños",
+									"type": "text"
+								},
+								{
+									"key": "Content",
+									"value": "El día de mi cumpleaños hicimos una pequeña fiesta para celebrar mis 25",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "2022-01-15T00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Attachment.Title",
+									"value": "Foto grupal",
+									"type": "text"
+								},
+								{
+									"key": "Attachment.Description",
+									"value": "Esta foto fue tomada con todos los asistentes",
+									"type": "text"
+								},
+								{
+									"key": "Attachment.File",
+									"type": "file",
+									"src": "/C:/Users/aaagu/Desktop/IMG_20211029_222925.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{srms-orchestration-service-url}}/api/events/{{contact-id}}",
+							"host": [
+								"{{srms-orchestration-service-url}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"{{contact-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Event for Contact Without Attachments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "EventName",
+									"value": "Entrada a Wizeline",
+									"type": "text"
+								},
+								{
+									"key": "Content",
+									"value": "El 26 de octubre del 2020 entré a trabajar a Wizeline",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "2020-10-26T00:00:00",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{srms-orchestration-service-url}}/api/events/{{contact-id}}",
+							"host": [
+								"{{srms-orchestration-service-url}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"{{contact-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact Events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{srms-orchestration-service-url}}/api/events/{{contact-id}}",
+							"host": [
+								"{{srms-orchestration-service-url}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"{{contact-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Get JWT Token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{srms-orchestration-service-url}}/api/auth",
+							"host": [
+								"{{srms-orchestration-service-url}}"
+							],
+							"path": [
+								"api",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk2MWU3ZThkLTAwMjItNDBmNy05ODQ0LTA3NGFjYmIxOGE4MSIsIm5iZiI6MTY1MDQzMDkyMiwiZXhwIjoxNjUwNDMyNzIyLCJpYXQiOjE2NTA0MzA5MjJ9._h5nK3FM4AfFi2PGsTBalVjtsBZ332U9zsJtq723auU",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

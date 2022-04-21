@@ -1,0 +1,298 @@
+{
+	"info": {
+		"_postman_id": "75ffcfbd-4265-431b-b484-94ea602025e0",
+		"name": "Events & Facts Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Contacts",
+			"item": [
+				{
+					"name": "Create Contact",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"{{user-id}}\",\r\n  \"contactId\": \"{{$randomUUID}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-events-service-url}}/api/contacts",
+							"host": [
+								"{{srms-events-service-url}}"
+							],
+							"path": [
+								"api",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Facts",
+			"item": [
+				{
+					"name": "Get Contact Facts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{srms-events-service-url}}/api/facts/{{contact-id}}",
+							"host": [
+								"{{srms-events-service-url}}"
+							],
+							"path": [
+								"api",
+								"facts",
+								"{{contact-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Fact",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fieldName\": \"{{$randomTransactionType}}\",\r\n  \"fieldType\": \"Single\",\r\n  \"category\": \"Gustos Personales\",\r\n  \"value\": [\r\n    \"{{$randomIngverb}}\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-events-service-url}}/api/facts/{{contact-id}}",
+							"host": [
+								"{{srms-events-service-url}}"
+							],
+							"path": [
+								"api",
+								"facts",
+								"{{contact-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Fact",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fieldName\": \"Helado favorito\",\r\n  \"fieldType\": \"Single\",\r\n  \"factCategory\": \"Gustos personales\",\r\n  \"value\": [\r\n    \"Cornetto de La Michoacana\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-events-service-url}}/api/facts/{{contact-id}}/288be790-6ea5-41a4-ac49-260a92218a07",
+							"host": [
+								"{{srms-events-service-url}}"
+							],
+							"path": [
+								"api",
+								"facts",
+								"{{contact-id}}",
+								"288be790-6ea5-41a4-ac49-260a92218a07"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Fact",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{srms-events-service-url}}/api/facts/{{contact-id}}/288be790-6ea5-41a4-ac49-260a92218a07",
+							"host": [
+								"{{srms-events-service-url}}"
+							],
+							"path": [
+								"api",
+								"facts",
+								"{{contact-id}}",
+								"288be790-6ea5-41a4-ac49-260a92218a07"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Fact Not Existing Contact",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fieldName\": \"Color favorito\",\r\n  \"fieldType\": \"Single\",\r\n  \"factCategory\": \"Gustos personales\",\r\n  \"value\": [\r\n    \"Amarillo\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-events-service-url}}/api/facts/{{contact-id}}2222",
+							"host": [
+								"{{srms-events-service-url}}"
+							],
+							"path": [
+								"api",
+								"facts",
+								"{{contact-id}}2222"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Create Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"eventName\": \"Fiesta de cumpleaños\",\r\n  \"content\": \"Esta foto es de mi cumpleaños 25\",\r\n  \"date\": \"2022-04-18T01:49:49.263Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-events-service-url}}/api/events/{{contact-id}}",
+							"host": [
+								"{{srms-events-service-url}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"{{contact-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact Events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{srms-events-service-url}}/api/events/{{contact-id}}",
+							"host": [
+								"{{srms-events-service-url}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"{{contact-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Event (Attachments)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user-id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"eventName\": \"Fiesta de graduación\",\r\n  \"content\": \"Mi inexistente fiesta de graduación\",\r\n  \"date\": \"2022-04-18T01:49:49.263Z\",\r\n  \"attachments\": [\r\n    {\r\n      \"title\": \"Foto de graduación\",\r\n      \"description\": \"Aquí pondría mi foto de graduación, si tuviera una!\",\r\n      \"url\": \"https://google.com/image.png\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{srms-events-service-url}}/api/events/{{contact-id}}",
+							"host": [
+								"{{srms-events-service-url}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"{{contact-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

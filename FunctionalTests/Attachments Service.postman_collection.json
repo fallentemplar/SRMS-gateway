@@ -1,0 +1,56 @@
+{
+	"info": {
+		"_postman_id": "cf7e4afa-631c-4597-994c-83c8b3bce5dc",
+		"name": "Attachments Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Attachment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{srms-attachment-service-url}}/api/attachments/edb73a97-5c4d-4fbc-a326-ebbe88d78b71.jpg",
+					"host": [
+						"{{srms-attachment-service-url}}"
+					],
+					"path": [
+						"api",
+						"attachments",
+						"edb73a97-5c4d-4fbc-a326-ebbe88d78b71.jpg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Attachment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{srms-attachment-service-url}}/api/attachments",
+					"host": [
+						"{{srms-attachment-service-url}}"
+					],
+					"path": [
+						"api",
+						"attachments"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
